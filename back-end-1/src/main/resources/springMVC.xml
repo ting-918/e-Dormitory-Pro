@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- dtd/schema(xsd)文件 =》约束xml如何编写-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/mvc  https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 开启@RequestMapping注解功能 -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <!-- 因为请求分发器的url-pattern配置的是/，所以tomcat中不会处理当前应用的静态资源 =》只能交给springMVC来处理
+            拦截用户的请求并做出相应的处理，e.g. 通过拦截器来进行用户权限验证，或者用来判断用户是否已经登录
+     -->
+
+    <!--mapping：怎样的url请求将会去static目录下查找-->
+    <!--mapping **代表是多级目录-->
+    <!--location 静态资源位置-->
+<!--    <mvc:resources mapping="/static/**" location="/static/"></mvc:resources>-->
+    <!-- 设置控制器扫描包 -->
+    <context:component-scan base-package="com.neu.controller"/>
+
+    <!-- 读取配置文件 -->
+    <context:property-placeholder system-properties-mode="NEVER" location="classpath:sys.properties"/>
+
+    <!-- 配置文件上传解析器 -->
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+        <!--请求最大大小-->
+        <property value="479196" name="maxUploadSize"/>
+        <!--单个文件最大大小-->
+        <property value="479195" name="maxUploadSizePerFile"/>
+        <!--文件上传在内存缓存最大大小-->
+        <property value="10240" name="maxInMemorySize"/>
+        <!--文件上传的临时目录-->
+        <property value="temp" name="uploadTempDir"/>
+    </bean>
+</beans>

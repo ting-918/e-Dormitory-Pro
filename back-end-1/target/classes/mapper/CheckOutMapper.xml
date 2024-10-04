@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neu.mapper.CheckOutMapper">
+    <!--查詢所有待審核信息( CheckOut 和 Student 聯表查詢 )-->
+    <select id="findAll" resultType="CheckOutVO" >
+        SELECT c.*, s.name, s.classes
+        FROM CheckOut c
+        LEFT JOIN Student s ON c.studentid = s.studentid
+        WHERE c.status = 1
+    </select>
+
+    <!--查詢指定學生的退宿申請信息-->
+    <select id="findById" resultType="CheckOutVO" parameterType="String">
+        select * from CheckOut where studentid = #{studentid}
+    </select>
+
+    <!--添加一條新紀錄-->
+    <insert id="add" parameterType="CheckOut">
+        insert into CheckOut (studentid, reason, status) values(#{studentid},#{reason},#{status})
+    </insert>
+
+    <!--根據學生id刪除指定紀錄-->
+    <delete id="deleteById" parameterType="String">
+        delete from CheckOut where studentid = #{studentid}
+    </delete>
+
+    <!--更新指定學生的退宿申請狀態-->
+    <update id="updateById" parameterType="CheckOut">
+        update CheckOut
+        <set>
+            <if test="reason!=null and reason!=''">
+                reason=#{reason},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+        </set>
+        where studentid = #{studentid}
+    </update>
+
+</mapper>

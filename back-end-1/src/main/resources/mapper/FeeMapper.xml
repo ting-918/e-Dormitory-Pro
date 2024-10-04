@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neu.mapper.FeeMapper">
+
+    <!--查詢指定年度月份紀錄-->
+    <select id="findAll" resultType="FeeVO" parameterType="Fee">
+        SELECT * FROM Fee WHERE feeDate=#{feeDate}
+    </select>
+
+    <!--查詢指定年度月份、指定樓棟紀錄( Fee 和 Dormitory 聯表查詢 )-->
+    <select id="findByBid" resultType="FeeVO" parameterType="Fee">
+        SELECT f.*
+        FROM Fee f
+        LEFT JOIN DORMITORY d ON f.did=d.did
+        WHERE f.feeDate=#{feeDate} and d.bid=#{bid}
+    </select>
+
+    <!--查詢指定年度月份、指定宿舍紀錄-->
+    <select id="findByDid" resultType="FeeVO" parameterType="String">
+        SELECT * FROM Fee WHERE did=#{did}
+    </select>
+
+    <!--批量增加新紀錄-->
+    <insert id="addInBatch" parameterType="Fee">
+        insert all
+        <foreach collection="list" item="fee">
+            into Fee (did, feeDate, electricFee, waterFee, status) values (#{fee.did},#{fee.feeDate},#{fee.electricFee},#{fee.waterFee},0)
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <!--根據宿舍號和年度月份更新狀態-->
+    <update id="updateStatus" parameterType="Fee">
+        update Fee
+        <set>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+        </set>
+        where did=#{did} and feeDate=#{feeDate}
+    </update>
+
+    <!--刪除指定宿舍的所有水電費用紀錄-->
+    <delete id="deleteByDid" parameterType="String">
+        delete from Fee where did = #{did}
+    </delete>
+
+</mapper>

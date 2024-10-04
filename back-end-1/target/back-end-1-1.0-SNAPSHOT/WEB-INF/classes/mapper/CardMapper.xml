@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neu.mapper.CardMapper">
+
+    <!--添加一條新紀錄-->
+    <insert id="add" parameterType="Card">
+        insert into Card (studentid, bid, status) values(#{studentid},#{bid},#{status})
+    </insert>
+
+    <!--刪除指定學生的門禁卡紀錄-->
+    <delete id="deleteById" parameterType="String">
+        delete from Card where studentid = #{studentid}
+    </delete>
+
+    <!--更新指定學生的門禁卡信息-->
+    <update id="updateById" parameterType="Card">
+        update Card
+        <set>
+            <if test="bid!=null and bid!=''">
+                bid=#{bid},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+        </set>
+        where studentid = #{studentid}
+    </update>
+</mapper>

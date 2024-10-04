@@ -1,0 +1,29 @@
+/************************ css 重置 ************************/
+/*加載google font字體*/
+@import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@700&display=swap');
+html,body,div,span,h1,h2,h3,h4,h5,h6,ul,li,p{
+    margin: 0;
+    padding: 0;
+}
+html,body{
+    width: 100%;
+    height:100%;
+    cursor: default;
+    font-family:'Old Standard TT', serif;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+.el-radio-button__inner {
+    color: #667a89;
+    border-color: #BCCFDF;
+    background: #BCCFDF;
+}
+.el-radio-button__inner:hover {
+    color: #ffffff;
+    border-color: #BCCFDF;
+    background: #BCCFDF;
+}

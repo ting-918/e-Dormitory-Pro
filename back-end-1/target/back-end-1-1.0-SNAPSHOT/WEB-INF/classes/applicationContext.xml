@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- dtd/schema(xsd)文件 =》约束xml如何编写-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--
+        xml配置bean方法
+        1.注解方式
+            要求：
+                无参构造器
+                component-scanner【配置扫描路径(配置哪里有ioc注解 =》ioc在哪些包中有)】
+    -->
+    <!-- <context:component-scan base-package="com.neu.dao.impl, com.neu.service.impl"></context:component-scan>-->
+
+    <!-- 让容器来配置、创建和管理UserServiceImpl对象；内部会自己创建这个bean对象-->
+   <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+       <property name="username" value="SCOTT"></property>
+       <property name="password" value="Common123"></property>
+       <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+<!--       <property name="url" value="jdbc:oracle:thin:@orcl.ca3rle1vecyr.ap-southeast-2.rds.amazonaws.com:1521:orcl"></property>-->
+       <property name="url" value="jdbc:oracle:thin:@172.20.95.207:1521:orcl"></property>
+       <property name="maxActive" value="10"></property>
+       <property name="initialSize" value="2"></property>
+       <property name="maxWait" value="2000"></property>
+       <property name="minIdle" value="2"></property>
+   </bean>
+
+    <!-- 将sqlSessionFactory交给容器管理 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis.xml"></property>
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="mapperLocations" value="classpath:/mapper/*Mapper.xml"></property>
+    </bean>
+
+    <!--将UserMapper交给容器管理-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 含义：自动创建指定包下的Mapper接口对应的代理对象并交给容器来管理 -->
+        <property name="basePackage" value="com.neu.mapper"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <context:component-scan base-package="com.neu.service.impl"></context:component-scan>
+
+    <!-- web才需要，非web可以不用，通俗做法不管什么情况都加 -->
+    <context:annotation-config></context:annotation-config>
+
+
+</beans>

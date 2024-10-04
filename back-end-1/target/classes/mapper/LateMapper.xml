@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neu.mapper.LateMapper">
+
+    <!--查詢指定學生的夜歸紀錄-->
+    <select id="findById" resultType="LateVO" parameterType="String">
+        select * from Late where studentid=#{studentid}
+    </select>
+
+    <!--查詢指定日期的夜歸名單-->
+    <select id="findByDate" resultType="String" parameterType="Late">
+        select studentid from Late where lateDate=#{lateDate}
+    </select>
+
+    <!--添加一條新夜歸紀錄-->
+    <insert id="add" parameterType="Late">
+        insert into Late
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            studentid,lateDate,recordTime,
+            <if test="reason!=null and reason!=''">
+                reason,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            #{studentid},#{lateDate},#{recordTime},
+            <if test="reason!=null and reason!=''">
+                #{reason},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

@@ -1,0 +1,20 @@
+
+m	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛÇôõ8ò‘½¥•1
+m	java:S117 "QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(þ¨Èú8ò‘½¥•1
+r	java:S117H"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛÂ­—þÿÿÿÿ8ó‘½¥•1
+l	java:S116"QRename this field "cat_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(èé¢]8ü‘½¥•1
+p	java:S116"URename this field "adopter_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(èé¢]8ý‘½¥•1
+u	java:S116
+"TRename this field "send_date" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸¦Ìáÿÿÿÿÿ8ý‘½¥•1
+_
+java:S1659"CDeclare "cat_id" and all following declarations on a separate line.(èé¢]8ÿ‘½¥•1
+G
+java:S1659"%Declare "picture" on a separate line.(Ý¹ÙÙùÿÿÿÿ8ÿ‘½¥•1
+j	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°·Î¤8ƒ’½¥•1
+j	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛÇôõ8„’½¥•1
+o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Œ¹ØÎüÿÿÿÿ8„’½¥•1
+j	java:S100 "NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(þ¨Èú8…’½¥•1
+j	java:S100D"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ƒï©€8‡’½¥•1
+o	java:S100H"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛÂ­—þÿÿÿÿ8ˆ’½¥•1
+G
+java:S1128"*Remove this unused import 'java.sql.Date'.(ÙÀ½Ê8‰’½¥•1

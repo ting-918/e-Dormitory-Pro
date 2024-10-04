@@ -1,0 +1,32 @@
+{
+  "name": "user_front_end",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "@vuemap/vue-amap": "^2.0.15",
+    "axios": "^1.4.0",
+    "core-js": "^3.8.3",
+    "element-plus": "^2.3.7",
+    "js-cookie": "^3.0.5",
+    "node-xlsx": "^0.23.0",
+    "qs": "^6.11.2",
+    "vue": "^3.2.13",
+    "vue-cookie": "^1.1.4",
+    "vue-cookies": "^1.8.3",
+    "vue-phone-number-input": "^1.12.13",
+    "vue-router": "^4.0.3",
+    "vue3-cookies": "^1.0.6",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0"
+  }
+}

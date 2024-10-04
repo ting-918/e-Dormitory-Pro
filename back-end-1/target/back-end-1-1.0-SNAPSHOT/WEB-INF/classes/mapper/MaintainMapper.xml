@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neu.mapper.MaintainMapper">
+
+    <!--查詢所有報修紀錄-->
+    <select id="findAll" resultType="MaintainVO">
+        select * from Maintain
+    </select>
+
+    <!--查詢指定寢室的報修紀錄-->
+    <select id="findByDid" resultType="MaintainVO" parameterType="String">
+        select * from Maintain where did = #{did}
+    </select>
+
+    <!--查詢指定樓棟的報修紀錄( Maintain 和 Dormitory 聯表查詢 )-->
+    <select id="findByBid" resultType="MaintainVO" parameterType="String">
+        SELECT m.*
+        FROM Maintain m
+        LEFT JOIN DORMITORY d ON m.did=d.did
+        WHERE d.bid=#{bid}
+    </select>
+
+    <!--添加一條新報修紀錄-->
+    <insert id="add" parameterType="Maintain">
+        insert into Maintain
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            did,item,applytime,
+            <if test="reason!=null and reason!=''">
+                reason,
+            </if>
+            <if test="phone!=null and phone!=''">
+                phone,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            #{did},#{item},#{applytime},
+            <if test="reason!=null and reason!=''">
+                #{reason},
+            </if>
+            <if test="phone!=null and phone!=''">
+                #{phone},
+            </if>
+        </trim>
+    </insert>
+
+    <!--根據id更新指定紀錄（更新維修完成時間handleTime）-->
+    <update id="complete" parameterType="Maintain">
+        update Maintain set handletime=#{handletime}
+        where id = #{id}
+    </update>
+
+    <!--刪除指定宿舍的所有報修紀錄-->
+    <delete id="deleteByDid" parameterType="String">
+        delete from Maintain where did = #{did}
+    </delete>
+
+
+</mapper>

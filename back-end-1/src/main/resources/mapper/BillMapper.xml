@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neu.mapper.BillMapper">
+
+    <!--查詢指定年份紀錄( Bill 和 Student 聯表查詢 )-->
+    <select id="findAll" resultType="BillVO" parameterType="String">
+        SELECT b.*, s.name, s.classes
+        FROM Bill b
+        LEFT JOIN Student s ON b.studentid = s.studentid
+        WHERE b.year=#{year}
+    </select>
+
+    <!--查詢指定年份、學生紀錄-->
+    <select id="findById" resultType="BillVO" parameterType="Bill">
+        select * from Bill
+        <trim prefix="where " prefixOverrides="and">
+            studentid=#{studentid}
+            <if test="year!=null and year!=''">
+                and year=#{year}
+            </if>
+        </trim>
+    </select>
+
+    <!--確認是否還有尚未收到本年度繳費單的住宿生-->
+    <select id="check" resultType="BillVO" parameterType="String">
+        SELECT s.* FROM Student s
+        WHERE NOT EXISTS (SELECT * FROM Bill b WHERE b.studentid=s.studentid AND year=#{year}) AND s.status=0
+    </select>
+
+    <!--添加一條新紀錄-->
+    <insert id="add" parameterType="Bill">
+        insert into Bill (studentid, year, price, status) values(#{studentid},#{year},#{price},#{status})
+    </insert>
+
+    <!--批量增加新紀錄-->
+    <insert id="addInBatch" parameterType="Bill">
+        begin
+            Bill_addInBatch(#{year},#{price});
+        end;
+    </insert>
+
+    <!--更新指定學生的指定年度繳費單狀態-->
+    <update id="updateStatus" parameterType="Bill">
+        update Bill
+        <set>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="price!=null and price>0">
+                price = #{price},
+            </if>
+        </set>
+        where studentid=#{studentid} and year=#{year}
+    </update>
+
+</mapper>

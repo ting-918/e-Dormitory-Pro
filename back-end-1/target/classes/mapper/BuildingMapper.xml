@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neu.mapper.BuildingMapper">
+
+    <!--查詢全部樓棟信息( Building 和 視圖 v_building_people 聯表查詢 )-->
+    <select id="findAll" resultType="BuildingVO" >
+        SELECT b.*, v.amount
+        FROM Building b
+        LEFT JOIN v_building_people v ON v.bid=b.bid
+    </select>
+
+    <!--查詢指定樓棟信息-->
+    <select id="findByBid" resultType="BuildingVO" parameterType="String">
+        select * from Building where bid = #{bid}
+    </select>
+
+    <!--添加一條新樓棟紀錄-->
+    <insert id="add" parameterType="Building">
+        insert into Building (bid, pwd) values(#{bid},#{pwd})
+    </insert>
+
+    <!--刪除指定樓棟紀錄-->
+    <delete id="deleteByBid" parameterType="String">
+        delete from Building where bid = #{bid}
+    </delete>
+
+    <!--更新指定樓棟的登入密碼-->
+    <update id="updateByBid" parameterType="Building">
+        update Building
+        <set>
+            <if test="pwd !=null">
+                pwd=#{pwd},
+            </if>
+        </set>
+        where bid = #{bid}
+    </update>
+
+</mapper>

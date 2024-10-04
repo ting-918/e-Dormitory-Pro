@@ -1,0 +1,5 @@
+
+m	java:S117%"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛÇôõ8¶æé¦•1
+l	java:S116"QRename this field "cat_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ç¥ÿ@8Þêè¦•1
+j	java:S100!"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°·Î¤8Åæé¦•1
+j	java:S100%"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛÇôõ8Åæé¦•1

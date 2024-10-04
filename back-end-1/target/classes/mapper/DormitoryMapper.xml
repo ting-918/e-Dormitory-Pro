@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neu.mapper.DormitoryMapper">
+
+    <!--添加一條新宿舍紀錄-->
+    <insert id="add" parameterType="Dormitory">
+        insert into Dormitory (bid, door, remain, did) values(#{bid},#{door},#{remain},#{did})
+    </insert>
+
+    <!--刪除指定樓棟的所有宿舍紀錄-->
+    <delete id="deleteByBid" parameterType="String">
+        delete from Dormitory where bid=#{bid}
+    </delete>
+
+    <!--查詢指定宿舍信息-->
+    <select id="findByDid" resultType="DormitoryVO" parameterType="String">
+        select * from Dormitory where did = #{did}
+    </select>
+
+    <!--查詢指定宿舍的居住人數-->
+    <select id="findAmount" resultType="int" parameterType="String">
+        select amount from v_dormitory_gender where did = #{did}
+    </select>
+
+    <!--查詢有人居住的宿舍-->
+    <select id="findValid" resultType="String">
+        select did from v_dormitory_gender
+    </select>
+
+    <!--查詢未滿員、性別相符的宿舍信息( 表 Dormitory 和 視圖 v_dormitory_gender 聯合查詢 )-->
+    <select id="findRemain" resultType="DormitoryVO" parameterType="int">
+        SELECT d.*, v.amount, v.gender
+        FROM Dormitory d
+        LEFT JOIN v_dormitory_gender v ON v.did=d.did
+        WHERE d.remain>0 and (v.gender IS NULL or v.gender=#{gender})
+        ORDER BY d.remain
+    </select>
+
+
+    <!--釋出床位(剩餘床位+1)-->
+    <update id="increaseRemain" parameterType="String">
+        update Dormitory
+        <set>
+            remain = remain+1,
+        </set>
+        where did = #{did}
+    </update>
+    <!--佔用床位(剩餘床位-1)-->
+    <update id="decreaseRemain" parameterType="String">
+        update Dormitory
+        <set>
+            remain = remain-1,
+        </set>
+        where did = #{did}
+    </update>
+</mapper>
